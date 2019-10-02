@@ -8,7 +8,7 @@ resource = rl[1] #grab name of GPIB source. This is hardcoded assuming which pos
 #construct a laser object with resource corresp. to laser's GPIB input
 inst = rm.open_resource(resource)
 
-
+#comment
 #inst = pyvisa.resources.gpib.GPIBInstrument()
 
 my_laser = AL8164(inst)
