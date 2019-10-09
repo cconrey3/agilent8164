@@ -15,3 +15,6 @@ laser.set_CW(0, 1543) #set laser source 0 to 1543 nanometers
 
 #Make sure we can get the laser current wavelength once set
 lam = laser.get_CW(0) #get the current wavelenth set to source 0
+
+#test sweep param setting. note, need speed/step < 40,000 step/sec
+lam_log = laser.sweep(1500, 1600, 100, 5)

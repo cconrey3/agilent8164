@@ -11,12 +11,10 @@ def laser_init():
         sys.exit("No GPIB Instrument Found -- Chris Conrey.")
     else:
         my_GPIB = GPIB_list[0]
-    #resource = rl[1] #grab name of GPIB source. This is hardcoded assuming which position the laser will hold.
+
     #construct a laser object with resource corresp. to laser's GPIB input
     inst = rm.open_resource(my_GPIB)
-
     my_laser = AL8164(inst)
-    #my_laser = al8164.AL8164(inst)
     print("SUCCESSFUL CONSTRUCTION")
     print(my_laser.inst)
 
@@ -42,4 +40,24 @@ class AL8164:
          self.inst.query("sour{}:wav {}NM".format(source, wavelength))
          print("Wavelength of source {} has been set to {} nm".format(source, wavelength))
 
+    def sweep(self, start, stop, speed, trig_step):
+        #run general setup
+        self.inst.query("wav:swe:mode {}".format("CONT")) #right now hardcoded to continuous sweep
+        self.inst.query("wav:swe:star {}nm".format(start))
+        self.inst.query("wav:swe:stop {}nm".format(stop))
+        self.inst.query("wav:swe:speed {}nm/s".format(speed))
+        self.inst.query("wav:swe:step {}nm".format(trig_step))
 
+        #Requisites for Lambda Logging
+        #note that laser requires trig rate of less than 40 KHz, that is, speed/trig_step must be less than 40,000 steps/sec
+
+        self.inst.query("trig1:outp STF") #set trigger to rising edge when each step finishes
+        self.inst.query("wav:swe:cycl 1") #only sweep up and down once.
+        self.inst.query("sour0:am:stat 0")#turn OFF AM capability
+        self.inst.query("wav:swe:llog 1")
+
+        self.inst.query("wav:swe STAR") #run the sweep
+
+        #Now grab the lambda logging data
+        lam_log = self.inst.query("sour0:read:data?")
+        return lam_log
