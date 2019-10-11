@@ -48,7 +48,7 @@ class AL8164:
         self.inst.write("sour0:pow:stat 0")
 
     def get_llog(self):
-        lam = self.inst.query_binary_values("sour0:read:data? llog", datatype = 'f')
+        lam = self.inst.query_binary_values("sour0:read:data? llog", datatype = 'f', is_big_endian = True)
         return lam    
 
     def sweep(self, start, stop, speed, trig_step):
@@ -73,7 +73,7 @@ class AL8164:
         print(ok_msg)
         self.inst.write("wav:swe STAR") #run the sweep
         print("SWEEP RUNNING")
-        sleep((stop - start)/speed + 8)
+        sleep((stop - start)/speed + 15)
         #sleep(10)
         print("SWEEP COMPLETE")
         #Now grab the lambda logging data
