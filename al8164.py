@@ -14,7 +14,7 @@ def laser_init():
         my_GPIB = GPIB_list[0]
 
     #construct a laser object with resource corresp. to laser's GPIB input
-    inst = rm.open_resource(my_GPIB)
+    inst = rm.open_resource(my_GPIB, values_format = 3)
     my_laser = AL8164(inst)
     print("SUCCESSFUL CONSTRUCTION")
     print(my_laser.inst)
