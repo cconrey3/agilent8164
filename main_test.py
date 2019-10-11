@@ -12,9 +12,12 @@ ID = laser.get_IDN()
 
 #Make sure we can set the laser current wavelength
 laser.set_CW(0, 1543) #set laser source 0 to 1543 nanometers
-
+print("SUCCESSFUL WAVELENGTH SET")
 #Make sure we can get the laser current wavelength once set
 lam = laser.get_CW(0) #get the current wavelenth set to source 0
+print("SUCCESSFUL WAVELENGTH GET")
 
 #test sweep param setting. note, need speed/step < 40,000 step/sec
 lam_log = laser.sweep(1500, 1600, 100, 5)
+print("SUCCESSFUL LASER SWEEP")
+print(lam_log)

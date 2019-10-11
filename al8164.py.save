@@ -26,7 +26,7 @@ def laser_init():
 class AL8164:
     def __init__(self, inst):
         AL8164.inst = inst
-
+        
     def get_IDN(self):
         ID = self.inst.query("*IDN?")
         print(ID)
@@ -40,7 +40,7 @@ class AL8164:
     def set_CW(self, source, wavelength):
          self.inst.write("sour{}:wav {}NM".format(source, wavelength))
          print("Wavelength of source {} has been set to {} nm".format(source, wavelength))
-
+    
     def enable(self):
         self.inst.write("sour0:pow:stat 1")
 
@@ -62,19 +62,22 @@ class AL8164:
         self.inst.write("wav:swe:cycl 1") #only sweep up and down once.
         self.inst.write("sour0:am:stat 0") #turn OFF AM capability
         self.inst.write("wav:swe:llog 1") #turn on lambda logging
-        print("CONFIRMING LLOG IS ON")
-        print(self.inst.write("wav:swe:llog?"))
+
         print("CONFIRMING SWEEP PARAMTERS")
         ok_msg = self.inst.query("sour0:wav:swe:chec?")
         print(ok_msg)
         self.inst.write("wav:swe STAR") #run the sweep
+        print("llog okay:")
+        print(self.inst.query("wav:swe:llog?"))
         print("SWEEP RUNNING")
-        sleep((stop - start)/speed + 5)
-        #sleep(10)
+        sleep((stop - start)/speed)
         print("SWEEP COMPLETE")
         #Now grab the lambda logging data
-        print("CHECK IF LLOG STILL ON")
-        print(self.inst.query("wav:swe:llog?"))
+        print("llog still on?")
+        print(sel.w grab the lambda logging data
+        print("llog still on?")
+        print(sel.
+
         print("RETRIEVING LAMBDA LOG")
         #lam_log = self.inst.query("sour0:chan1:read:data?")
         #return lam_log
