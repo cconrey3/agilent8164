@@ -47,6 +47,9 @@ class AL8164:
     def disable(self):
         self.inst.write("sour0:pow:stat 0")
 
+    def get_llog(self):
+        self.inst.query("sour0:read:data? llog")    
+
     def sweep(self, start, stop, speed, trig_step):
         #run general setup
         self.inst.write("wav:swe:mode {}".format("CONT")) #right now hardcoded to continuous sweep
