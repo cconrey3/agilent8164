@@ -48,7 +48,7 @@ class AL8164:
         self.inst.write("sour0:pow:stat 0")
 
     def get_llog(self):
-        self.inst.query("sour0:read:data? llog", values_format = 3)    
+        self.inst.query_binary_values("sour0:read:data? llog", datatype = 'f')    
 
     def sweep(self, start, stop, speed, trig_step):
         #run general setup
