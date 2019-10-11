@@ -14,7 +14,7 @@ def laser_init():
         my_GPIB = GPIB_list[0]
 
     #construct a laser object with resource corresp. to laser's GPIB input
-    inst = rm.open_resource(my_GPIB, values_format = 3)
+    inst = rm.open_resource(my_GPIB)
     my_laser = AL8164(inst)
     print("SUCCESSFUL CONSTRUCTION")
     print(my_laser.inst)
@@ -48,7 +48,7 @@ class AL8164:
         self.inst.write("sour0:pow:stat 0")
 
     def get_llog(self):
-        self.inst.query("sour0:read:data? llog")    
+        self.inst.query("sour0:read:data? llog", values_format = 3)    
 
     def sweep(self, start, stop, speed, trig_step):
         #run general setup
